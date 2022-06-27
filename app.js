@@ -1,0 +1,91 @@
+require('dotenv').config();
+require('express-async-errors');
+
+//security packages
+const helmet = require('helmet')
+const cors = require('cors')
+const xss = require('xss-clean')
+const rateLimiter = require('express-rate-limit')
+
+const express = require('express');
+const app = express();
+
+
+
+//Db Connection
+const connectDB = require('./db/connect')
+const authenticateUser = require('./middleware/authentication')
+
+//routers
+const authRouter = require('./routes/auth')
+//const jobsRouter = require('./routes/jobs')
+const productsRouter = require('./routes/products')
+const upsRouter = require('./routes/ups')
+
+// error handler
+const notFoundMiddleware = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
+
+//invoke middleware
+app.use(express.json());
+
+//middleware for security
+app.set('trust proxy', 1)
+
+//Uncomment during production
+// app.use(rateLimiter({
+//   windowMs: 15*60*1000,//15 minutes
+//   //max: 100, //limit each IP to 100 requests per windowMs
+// }))
+app.use(helmet())
+const corsOptions = require('./config/corsOptions')
+
+//used for cors issues during production
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+//app.use(cors(corsOptions))
+app.use(cors())
+app.use(xss())
+
+// routes
+app.use('/api/v1/auth', authRouter)
+//app.use('/api/v1/jobs', authenticateUser, jobsRouter)
+app.use('/api/v1/products', productsRouter)
+app.use('/api/v1/ups', upsRouter)
+
+
+
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 3001;
+
+const path = require("path");
+
+// // Step 1:
+// app.use(express.static(path.resolve(__dirname, "./client/build")));
+// // Step 2:
+// app.get("*", function (request, response) {
+//   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+// });
+
+const start = async () => {
+  try {
+    console.log(path.resolve(__dirname, "./public", "index.html"))
+    app.use(express.static(path.resolve(__dirname, "/public")));
+    app.get("*", function (request, response) {
+      response.sendFile(path.resolve(__dirname, "./public", "index.html"));
+    });
+    await connectDB(process.env.MONGO_URI)
+    app.listen(port, () =>
+      console.log(`Server is listening on port ${port}...`)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
