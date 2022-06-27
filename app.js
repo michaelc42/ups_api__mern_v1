@@ -74,10 +74,10 @@ const path = require("path");
 
 const start = async () => {
   try {
-    console.log(path.resolve(__dirname, "./public", "index.html"))
-    app.use(express.static(path.resolve(__dirname, "/public")));
+    //console.log(path.resolve(__dirname, "./client/src", "App.js"))
+    app.use(express.static(path.resolve(__dirname, "/client/src")));
     app.get("*", function (request, response) {
-      response.sendFile(path.resolve(__dirname, "./public", "index.html"));
+      response.sendFile(path.resolve(__dirname, "./client/src", "App.js"));
     });
     await connectDB(process.env.MONGO_URI)
     app.listen(port, () =>
