@@ -77,10 +77,14 @@ const path = require("path");
 const start = async () => {
   try {
     //console.log(path.resolve(__dirname, "./client/src", "App.js"))
-    app.use(express.static(path.resolve(__dirname, "/client/src")));
-    app.get("*", function (request, response) {
-      response.sendFile(path.resolve(__dirname, "./client/src", "App.js"));
-    });
+    // app.use(express.static(path.resolve(__dirname, "/client/src")));
+    // app.get("*", function (request, response) {
+    //   response.sendFile(path.resolve(__dirname, "./client/src", "App.js"));
+    // });
+    //only use when ready to deploy
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, './client/build', 'index.html'))
+    })
     await connectDB(process.env.MONGO_URI)
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
