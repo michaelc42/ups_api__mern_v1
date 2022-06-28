@@ -24,6 +24,14 @@ const upsRouter = require('./routes/ups')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+
+const url = require('url')
+const fileURLToPath = url.fileURLToPath
+const path = require("path");
+
+// only when ready to deploy
+app.use(express.static(path.resolve(__dirname, './client/build')))
+
 //invoke middleware
 app.use(express.json());
 
@@ -56,16 +64,16 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/products', productsRouter)
 app.use('/api/v1/ups', upsRouter)
 
+// only when ready to deploy
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'))
+})
 
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
-
-const url = require('url')
-const fileURLToPath = url.fileURLToPath
-const path = require("path");
 
 const start = async () => {
   try {
@@ -74,16 +82,6 @@ const start = async () => {
     // app.get("*", function (request, response) {
     //   response.sendFile(path.resolve(__dirname, "./client/src", "App.js"));
     // });
-
-    // only when ready to deploy
-    app.use(express.static(path.join(__dirname, 'client/build/static')))
-
-    //only use when ready to deploy
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
-    })
-
-    console.log(path.join(__dirname, 'client/build', 'index.html'))
   
     
     await connectDB(process.env.MONGO_URI)
