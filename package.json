@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
+    "install-client": "--legacy-peer-deps cd client && npm install",
+    "heroku-postbuild": "--legacy-peer-deps cd client && npm install --only=dev && npm install && npm run build",
     "server": "nodemon server --ignore client",
     "client": "npm start --prefix client",
     "start": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\""
