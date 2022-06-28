@@ -67,14 +67,6 @@ const url = require('url')
 const fileURLToPath = url.fileURLToPath
 const path = require("path");
 
-
-
-// only when ready to deploy
-app.use(express.static(path.resolve(__dirname, './client/build')))
- 
-console.log(express)
-
-
 const start = async () => {
   try {
     //console.log(path.resolve(__dirname, "./client/src", "App.js"))
@@ -83,9 +75,13 @@ const start = async () => {
     //   response.sendFile(path.resolve(__dirname, "./client/src", "App.js"));
     // });
     //only use when ready to deploy
-    app.get('/*', (req, res) => {
+    app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
     })
+
+    // only when ready to deploy
+    app.use(express.static(path.resolve(__dirname, './client/build')))  
+    
     await connectDB(process.env.MONGO_URI)
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
