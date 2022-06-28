@@ -83,8 +83,8 @@ const start = async () => {
     //   response.sendFile(path.resolve(__dirname, "./client/src", "App.js"));
     // });
     //only use when ready to deploy
-    app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, './client/build', 'index.html'))
+    app.get('/*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
     })
     await connectDB(process.env.MONGO_URI)
     app.listen(port, () =>
