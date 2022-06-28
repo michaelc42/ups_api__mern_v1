@@ -10,8 +10,6 @@ const rateLimiter = require('express-rate-limit')
 const express = require('express');
 const app = express();
 
-
-
 //Db Connection
 const connectDB = require('./db/connect')
 const authenticateUser = require('./middleware/authentication')
@@ -65,14 +63,17 @@ app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 
+const url = require('url')
+const fileURLToPath = url.fileURLToPath
 const path = require("path");
 
-// // Step 1:
-// app.use(express.static(path.resolve(__dirname, "./client/build")));
-// // Step 2:
-// app.get("*", function (request, response) {
-//   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-// });
+
+
+// only when ready to deploy
+app.use(express.static(path.resolve(__dirname, './client/build')))
+ 
+console.log(express)
+
 
 const start = async () => {
   try {

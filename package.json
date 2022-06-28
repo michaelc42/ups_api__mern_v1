@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "cd client && npm run build",
+    "build-client": "cd client && npm run build",
     "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client",
+    "heroku-postbuild": "npm run install-client && npm run build-client",
     "server": "nodemon server --ignore client",
     "client": "npm start --prefix client",
     "start": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\""
@@ -29,12 +29,13 @@
     "path": "^0.12.7",
     "rate-limiter": "^0.2.0",
     "swagger-ui-express": "^4.1.6",
+    "url": "^0.11.0",
     "xss-clean": "^0.1.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.9",
-    "concurrently": "^7.2.2"
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.9"
   },
   "engines": {
     "node": "16.x"
