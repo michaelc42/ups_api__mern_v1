@@ -1,3 +1,14 @@
+### App Info
+Demo Link
+https://ups-api-mern-portf.herokuapp.com/
+
+App is to demo a MERN stack application that uses
+the UPS api to dynamically retrieve shipping cost
+based on customer location.
+
+Add items to cart and LOGIN to retrieve total price
+of product and shipping.
+
 #### Setup
 
 ```bash
