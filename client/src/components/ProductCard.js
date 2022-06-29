@@ -1,4 +1,5 @@
 import { Button, Card } from 'react-bootstrap'
+import { Star, StarFill, StarHalf } from 'react-bootstrap-icons';
 
 const ProductCard = (props) => {
     const { ProductName, _id, aggregateRating, brand,
@@ -6,8 +7,29 @@ const ProductCard = (props) => {
         shippingMeasurements, addToCartHandler } = props
     const croppedImage = imageSrc.slice(0, imageSrc.indexOf('.')) + 'crop' + imageSrc.slice(imageSrc.indexOf('.'))
     
+    function createStarRating(rating) { 
+        console.log(rating)
+        let starCount = 5
+        let starComponent = []
+        for (let i = 0; i < Math.floor(rating); i++) {
+            starComponent.push(<StarFill />)
+            starCount--
+        }
+        
+        if ((rating - Math.floor(rating)) !== 0) {
+            starComponent.push(<StarHalf />)
+            starCount--
+        }
+
+        for (let i = 0; i < starCount; i++) {
+            starComponent.push(<Star />)
+        }
+
+        return starComponent
+    }
+
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem' }} className='mt-3'>
             <div>
                 <Card.Img variant="top" className='' src={`/images/${croppedImage}`} />
             </div>
@@ -17,7 +39,7 @@ const ProductCard = (props) => {
                     {`$${price}`}
                 </Card.Text>
                 <Card.Text>
-                    {aggregateRating+'/5'}
+                    {aggregateRating + '/5'} {createStarRating(aggregateRating)}
                 </Card.Text>
                 <Card.Text>
                     {description}
@@ -33,7 +55,7 @@ const ProductCard = (props) => {
 
                     onClick={addToCartHandler}
                     className="w-100"
-                    variant="primary">Add to Cart</Button>
+                    variant="secondary">Add to Cart</Button>
             </Card.Body>
         </Card>
   )

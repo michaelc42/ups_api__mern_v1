@@ -12,15 +12,8 @@ const NavbarComp = ({allowedRoles}) => {
     <>
          <Navbar bg="light" expand="lg">
             <Container>
-          <Navbar.Brand as={Link} to='/home'>MERN Stack Test App</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="flex-grow-1">
-                    {/* <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link> */}
-                    {/* {auth.roles && auth.roles.includes(ROLES['Admin']) ? <Nav.Link as={Link} to="/admin">Admin</Nav.Link> : ''} */}
-                    <AvatarForNav />
-                  </Nav>
-                </Navbar.Collapse>
+              <Navbar.Brand as={Link} to='/home'>MERN Stack Test App</Navbar.Brand>
+              <AvatarForNav />
             </Container>
       </Navbar>
       

@@ -82,11 +82,10 @@ const Cart = () => {
                         <Form.Label className='col-3  offset-md-9 d-flex justify-content-between'><span>Taxes</span> <span>{taxes}</span></Form.Label>
                     </Form.Group>
                     <Form.Group className="row w-100 mt-0">
-                        <Form.Label className='col-3 offset-md-6 d-flex justify-content-center'><Button  className='w-100'>Calc Shipping</Button></Form.Label>
-                        <Form.Label className='col-3 d-flex justify-content-between'><span>Shipping</span> <span>{shipPrice ? '$' + shipPrice : 'TBD' }</span></Form.Label>
+                        <Form.Label className='col-3 offset-md-9 d-flex justify-content-between'><span>Shipping</span> <span>{shipPrice ? '$' + shipPrice : '-' }</span></Form.Label>
                     </Form.Group>
                     <Form.Group className="row w-100 mt-0">
-                        <Form.Label className='col-3 offset-md-9 border-top border-secondary d-flex justify-content-between'><span>Total Price</span> <span>{ total }</span></Form.Label>
+                        <Form.Label className='col-3 offset-md-9 border-top border-secondary d-flex justify-content-between'><span>Total Price</span> <span>{ isNaN(total) ? 'Login' : total }</span></Form.Label>
                     </Form.Group>
                 </Form>
                 ) : <h3>Cart is empty</h3>

@@ -14,7 +14,7 @@ const Home = () => {
 
   const addToCartHandler = (e) => {
 
-    console.log(e.target.getAttribute('data-id'))
+    //console.log(e.target.getAttribute('data-id'))
     let count = 0
     let updatedCart
     const alreadyInCart = cart.find(element => element.id === e.target.getAttribute('data-id'))
@@ -86,7 +86,7 @@ const Home = () => {
   })
   return (
 
-    <div className='mt-3 d-flex flex-wrap'>
+    <div className='mt-3 d-flex flex-wrap justify-content-center'>
       {prodCards.map(card => <div 
       className='mx-2' key={card.key}>{card}</div>)}
 
