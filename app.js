@@ -26,7 +26,6 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 
 const url = require('url')
-const fileURLToPath = url.fileURLToPath
 const path = require("path");
 
 // only when ready to deploy
@@ -39,10 +38,10 @@ app.use(express.json());
 app.set('trust proxy', 1)
 
 //Uncomment during production
-// app.use(rateLimiter({
-//   windowMs: 15*60*1000,//15 minutes
-//   //max: 100, //limit each IP to 100 requests per windowMs
-// }))
+app.use(rateLimiter({
+  windowMs: 15*60*1000,//15 minutes
+  //max: 100, //limit each IP to 100 requests per windowMs
+}))
 helmet({
     contentSecurityPolicy: false,
   })
